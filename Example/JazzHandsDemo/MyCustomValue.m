@@ -39,10 +39,7 @@
 {
     CGPoint origin = [self interpolateCGPointFrom:fromValue.origin to:toValue.origin withProgress:progress];
     CGSize size = [self.class interpolateCGSizeFrom:fromValue.size to:toValue.size withProgress:progress];
-    return (CGRect){
-        .origin = { .x = origin.x, .y = origin.y },
-        .size = { .width = size.width, .height = size.height }
-    };
+    return (CGRect){ .origin = origin, .size = size };
 }
 
 - (CGPoint)interpolateCGPointFrom:(CGPoint)fromValue to:(CGPoint)toValue withProgress:(CGFloat)progress
