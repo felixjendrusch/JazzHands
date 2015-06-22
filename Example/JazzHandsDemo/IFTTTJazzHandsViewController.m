@@ -8,6 +8,7 @@
 
 #import "IFTTTJazzHandsViewController.h"
 #import "MyCustomAnimation.h"
+#import "MyCustomValue.h"
 
 @interface IFTTTJazzHandsViewController ()
 
@@ -151,31 +152,36 @@
 
 - (void)configureWordmarkAnimations
 {
-    // let's animate the wordmark
-    // keep the wordmark centered on pages 1 and 2, slide it in fast from the right between page 0 and 1, and slide it out fast to the left between pages 2 and 3.
-    [self keepView:self.wordmark
-           onPages:@[ @(2), @(1), @(2), @(1) ]
-           atTimes:@[ @(0), @(1), @(2), @(3) ]];
-    
-    // keep the wordmark vertically centered on top of the unicorn
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.wordmark
-                                                                 attribute:NSLayoutAttributeCenterY
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.unicorn
-                                                                 attribute:NSLayoutAttributeCenterY
-                                                                multiplier:1.f constant:0.f]];
-    
-    // Rotate the wordmark a full circle from page 1 to 2
-    IFTTTRotationAnimation *wordmarkRotationAnimation = [IFTTTRotationAnimation animationWithView:self.wordmark];
-    [wordmarkRotationAnimation addKeyframeForTime:1 rotation:0.f];
-    [wordmarkRotationAnimation addKeyframeForTime:2 rotation:360.f];
-    [self.animator addAnimation:wordmarkRotationAnimation];
-    
-    // Scale down the wordmark by 75% between pages 1 and 2
-    IFTTTScaleAnimation *wordmarkScaleAnimation = [IFTTTScaleAnimation animationWithView:self.wordmark];
-    [wordmarkScaleAnimation addKeyframeForTime:1 scale:1.f];
-    [wordmarkScaleAnimation addKeyframeForTime:2 scale:0.75f];
-    [self.animator addAnimation:wordmarkScaleAnimation];
+//    // let's animate the wordmark
+//    // keep the wordmark centered on pages 1 and 2, slide it in fast from the right between page 0 and 1, and slide it out fast to the left between pages 2 and 3.
+//    [self keepView:self.wordmark
+//           onPages:@[ @(2), @(1), @(2), @(1) ]
+//           atTimes:@[ @(0), @(1), @(2), @(3) ]];
+//    
+//    // keep the wordmark vertically centered on top of the unicorn
+//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.wordmark
+//                                                                 attribute:NSLayoutAttributeCenterY
+//                                                                 relatedBy:NSLayoutRelationEqual
+//                                                                    toItem:self.unicorn
+//                                                                 attribute:NSLayoutAttributeCenterY
+//                                                                multiplier:1.f constant:0.f]];
+//    
+//    // Rotate the wordmark a full circle from page 1 to 2
+//    IFTTTRotationAnimation *wordmarkRotationAnimation = [IFTTTRotationAnimation animationWithView:self.wordmark];
+//    [wordmarkRotationAnimation addKeyframeForTime:1 rotation:0.f];
+//    [wordmarkRotationAnimation addKeyframeForTime:2 rotation:360.f];
+//    [self.animator addAnimation:wordmarkRotationAnimation];
+//    
+//    // Scale down the wordmark by 75% between pages 1 and 2
+//    IFTTTScaleAnimation *wordmarkScaleAnimation = [IFTTTScaleAnimation animationWithView:self.wordmark];
+//    [wordmarkScaleAnimation addKeyframeForTime:1 scale:1.f];
+//    [wordmarkScaleAnimation addKeyframeForTime:2 scale:0.75f];
+//    [self.animator addAnimation:wordmarkScaleAnimation];
+
+    IFTTTFrameAnimation *wordmarkFrameAnimation = [IFTTTFrameAnimation animationWithView:self.wordmark];
+    [wordmarkFrameAnimation addKeyframeForTime:0 value:[[MyCustomValue alloc] initWithCGRect:CGRectMake(0, 0, 189, 50) controlPoint1:CGPointMake(320, 80) controlPoint2:CGPointMake(0, 240)]];
+    [wordmarkFrameAnimation addKeyframeForTime:1 value:[[MyCustomValue alloc] initWithCGRect:CGRectMake(320, 320, 189, 50) controlPoint1:CGPointZero controlPoint2:CGPointZero]];
+    [self.animator addAnimation:wordmarkFrameAnimation];
 }
 
 - (void)configureLabelAnimations
